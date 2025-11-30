@@ -17,7 +17,7 @@ export function authMiddleware(
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(401).json({ erro: 'Token não fornecido' });
+    return res.status(401).json({ erro: 'Faça login para continuar' });
   }
 
   const [, token] = authorization.split(' ');

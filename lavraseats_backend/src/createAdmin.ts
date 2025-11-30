@@ -10,12 +10,12 @@ async function main() {
 
   try {
     const admin = await prisma.usuario.upsert({
-      where: { email: 'lavraseats@gmail.com' },
+      where: { email: 'admin@lavraseats.com' },
       update: {},
       create: {
         nome: 'Leonardo Gonçalves',
-        email: 'lavraseats@gmail.com',
-        cpf: '111.111.111-11',
+        email: 'admin@lavraseats.com',
+        cpf: '123.111.111-11',
         senha: passwordHash,
         cargo: 'gerente',
         is_active: true,  
@@ -24,7 +24,7 @@ async function main() {
     });
 
     console.log('✅ Super Usuário garantido!');
-    console.log('📧 Email: lavraseats@gmail.com');
+    console.log('📧 Email: admin@lavraseats.com');
     console.log('🔑 Senha: 123456');
   } catch (e) {
     console.error('❌ Erro ao criar admin:', e);
