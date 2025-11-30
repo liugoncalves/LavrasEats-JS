@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./lavraseats_backend
+      dockerfile: Dockerfile
+    container_name: lavraseats_backend_node
+    command: sh -c "npx prisma db push && npx ts-node src/createAdmin.ts && npm run dev"
+    env_file:
+      - ./lavraseats_backend/.env
+    environment:
+      - DATABASE_URL=postgresql://postgres:1234@db:5432/lavraseats?schema=public
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./lavraseats_backend:/app
+      - /app/node_modules
+      - ./lavraseats_backend/uploads:/app/uploads
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    build:
+      context: ./lavraseats_frontend
+      dockerfile: Dockerfile
+    container_name: lavraseats_frontend
+    env_file:
+      - ./lavraseats_frontend/.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./lavraseats_frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    restart: always
+
+  db:
+    image: postgres:16
+    container_name: lavras_db
+    environment:
+      POSTGRES_DB: lavraseats
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  pgdata:

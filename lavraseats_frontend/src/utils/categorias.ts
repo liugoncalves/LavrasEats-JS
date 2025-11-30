@@ -1,0 +1,22 @@
+export const categorias = [
+  { valor: "acai", label: "Açaí" },
+  { valor: "arabe", label: "Comida Árabe" },
+  { valor: "cafeteria", label: "Cafeteria" },
+  { valor: "chinesa", label: "Comida Chinesa" },
+  { valor: "churrascaria", label: "Churrascaria" },
+  { valor: "doces", label: "Doces/Sobremesas" },
+  { valor: "hamburgueria", label: "Hamburgueria" },
+  { valor: "italiana", label: "Comida Italiana" },
+  { valor: "japonesa", label: "Comida Japonesa" },
+  { valor: "marinhos", label: "Frutos do Mar" },
+  { valor: "marmitex", label: "Marmitex" },
+  { valor: "mexicana", label: "Comida Mexicana" },
+  { valor: "nordestina", label: "Comida Nordestina" },
+  { valor: "pizza", label: "Pizzaria" },
+  { valor: "porcoes", label: "Porções" },
+  { valor: "saudavel", label: "Saudável" },
+  { valor: "sorveteria", label: "Sorveteria" },
+  { valor: "tapioca", label: "Tapioca" },
+  { valor: "vegana", label: "Vegana" },
+  { valor: "vegetariana", label: "Vegetariana" }
+]

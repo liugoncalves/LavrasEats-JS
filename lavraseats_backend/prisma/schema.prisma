@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl" ,"linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id                 Int      @id @default(autoincrement())
+  nome               String
+  cpf                String   @unique
+  email              String   @unique
+  senha              String
+  cargo              String   @default("usuario")
+  is_active          Boolean  @default(false)
+  codigo_confirmacao String?
+  criado_em          DateTime @default(now())
+
+  avaliacoes         Avaliacao[]
+
+  @@map("usuarios")
+}
+
+model Restaurante {
+  id                Int      @id @default(autoincrement())
+  nome              String
+  telefone          String?
+  endereco          String
+  descricao         String?
+  categoria         String
+  nota_media        Float    @default(0.0)
+  numero_avaliacoes Int      @default(0)
+  poster            String?
+
+  avaliacoes        Avaliacao[]
+
+  @@unique([nome, endereco, categoria])
+  @@map("restaurantes")
+}
+
+model Avaliacao {
+  id               Int      @id @default(autoincrement())
+  texto            String
+  sentimento       String
+  nota             Float
+  criado_em        DateTime @default(now())
+  sentimento_texto String?
+
+  // Relacionamentos
+  usuario_id       Int
+  usuario          Usuario  @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
+
+  restaurante_id   Int
+  restaurante      Restaurante @relation(fields: [restaurante_id], references: [id], onDelete: Cascade)
+
+  @@unique([usuario_id, restaurante_id])
+  @@map("avaliacoes")
+}
+
+// Tabela auxiliar para confirmação de cadastro (opcional, mas mantendo lógica do Django)
+model CodigoConfirmacao {
+  id        Int      @id @default(autoincrement())
+  cpf       String   @unique
+  codigo    String
+  dados     Json
+  criado_em DateTime @default(now())
+
+  @@map("codigos_confirmacao")
+}
